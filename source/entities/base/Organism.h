@@ -22,6 +22,8 @@ private:
 public:
 	Organism(int power, Position position);
 	Organism();
+	
+	Organism(const Organism& other);
 
 	int getPower();
 	void setPower(int power);

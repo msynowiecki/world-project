@@ -18,6 +18,24 @@ Organism::Organism(int power, Position position) {
 
 Organism::Organism() : power(0), position(0, 0), species("O"), ancestorHistory(nullptr), ancestorHistorySize(0) {}
 
+Organism::Organism(const Organism& other) {
+    this->power = other.power;
+    this->position = other.position;
+    this->species = other.species;
+
+    this->ancestorHistorySize = other.ancestorHistorySize;
+
+    if (other.ancestorHistory != nullptr) {
+        this->ancestorHistory = new LifeSpan[other.ancestorHistorySize];
+
+        for (int iterator = 0; iterator < other.ancestorHistorySize; iterator++) {
+            this->ancestorHistory[iterator] = other.ancestorHistory[iterator];
+        }
+    } else {
+        this->ancestorHistory = nullptr;
+    }
+}
+
 int Organism::getPower() { return this->power; }
 void Organism::setPower(int power) { this->power = power; }
 
