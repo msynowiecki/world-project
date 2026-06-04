@@ -83,6 +83,8 @@ Organism& Organism::operator=(Organism&& other) noexcept {
     return *this;
 }
 
+Organism::~Organism() { delete[] ancestorHistory; }
+
 int Organism::getPower() { return this->power; }
 void Organism::setPower(int power) { this->power = power; }
 
