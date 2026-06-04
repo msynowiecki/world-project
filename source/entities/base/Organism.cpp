@@ -110,9 +110,19 @@ void Organism::addAncestorHistory(int birth, int death){
 }
 
 string Organism::toString() {
-	return "{ species: " + this->getSpecies() + 
-		", power: " + to_string(getPower()) + 
-		", position: " + getPosition().toString() + "}";
+    string historyString = ", history: [";
+
+    for(int iterator=0; iterator<ancestorHistorySize; iterator++) {
+        historyString += "(" + to_string(ancestorHistory[iterator].birthTurn) + "->" + to_string(ancestorHistory[iterator].deathTurn) + ")";
+        
+        if(iterator < ancestorHistorySize - 1) historyString += ", ";
+    }
+    historyString += "]";
+
+    return "{ species: " + this->getSpecies() + 
+        ", power: " + to_string(getPower()) + 
+        ", position: " + getPosition().toString() + 
+        historyString + "}";
 }
 
 void Organism::move(int directionX, int directionY) {
