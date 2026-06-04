@@ -25,8 +25,9 @@ public:
 
 	Organism(const Organism& other);
 	Organism(Organism&& other) noexcept;
-	
+
 	Organism& operator=(const Organism& other);
+	Organism& operator=(Organism&& other) noexcept;
 
 	int getPower();
 	void setPower(int power);
