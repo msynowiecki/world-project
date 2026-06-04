@@ -40,6 +40,8 @@ public:
 	string getSpecies();
 	void setSpecies(string species);
 
+	void addAncestorHistory(int birthTurn, int deathTurn);
+
 	string toString();
 
 	virtual void move(int directionX, int directionY);

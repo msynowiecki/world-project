@@ -94,6 +94,21 @@ void Organism::setPosition(Position position) { this->position = position; }
 string Organism::getSpecies() { return this->species; }
 void Organism::setSpecies(string species) { this->species = species; }
 
+void Organism::addAncestorHistory(int birth, int death){
+    LifeSpan* newHistory = new LifeSpan[this->ancestorHistorySize + 1];
+
+    for (int iterator = 0; iterator < this->ancestorHistorySize; iterator++) {
+        newHistory[iterator] = this->ancestorHistory[iterator];
+    }
+
+    newHistory[this->ancestorHistorySize].birthTurn = birth;
+    newHistory[this->ancestorHistorySize].deathTurn = death;
+
+    delete[] this->ancestorHistory;
+    this->ancestorHistory = newHistory;
+    this->ancestorHistorySize++;
+}
+
 string Organism::toString() {
 	return "{ species: " + this->getSpecies() + 
 		", power: " + to_string(getPower()) + 
