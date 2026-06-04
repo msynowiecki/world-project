@@ -36,6 +36,18 @@ Organism::Organism(const Organism& other) {
     }
 }
 
+Organism::Organism(Organism&& other) noexcept {
+    this->power = other.power;
+    this->position = other.position;
+    this->species = other.species;
+    this->ancestorHistorySize = other.ancestorHistorySize;
+    
+    this->ancestorHistory = other.ancestorHistory;
+    
+    other.ancestorHistory = nullptr;
+    other.ancestorHistorySize = 0;
+}
+
 int Organism::getPower() { return this->power; }
 void Organism::setPower(int power) { this->power = power; }
 
