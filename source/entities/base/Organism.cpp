@@ -1,11 +1,4 @@
-#pragma once
-#include <string>
 #include "Organism.h"
-
-struct LifeSpan {
-	int birthTurn;
-	int deathTurn;
-};
 
 Organism::Organism(int power, Position position) {
 	setPower(power);
@@ -40,12 +33,36 @@ Organism::Organism(Organism&& other) noexcept {
     this->power = other.power;
     this->position = other.position;
     this->species = other.species;
-    this->ancestorHistorySize = other.ancestorHistorySize;
-    
+
     this->ancestorHistory = other.ancestorHistory;
+    this->ancestorHistorySize = other.ancestorHistorySize;
     
     other.ancestorHistory = nullptr;
     other.ancestorHistorySize = 0;
+}
+
+Organism& Organism::operator=(const Organism& other) {
+    if (this == &other) return *this;
+
+    delete[] this->ancestorHistory;
+
+    this->power = other.power;
+    this->position = other.position;
+    this->species = other.species;
+
+    this->ancestorHistorySize = other.ancestorHistorySize;
+
+    if (other.ancestorHistory != nullptr) {
+        this->ancestorHistory = new LifeSpan[other.ancestorHistorySize];
+        
+        for (int iterator = 0; iterator < other.ancestorHistorySize; iterator++) {
+            this->ancestorHistory[iterator] = other.ancestorHistory[iterator];
+        }
+    } else {
+        this->ancestorHistory = nullptr;
+    }
+
+    return *this;
 }
 
 int Organism::getPower() { return this->power; }
