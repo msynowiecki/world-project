@@ -11,7 +11,12 @@ Organism::Organism(int power, Position position) {
 	setPower(power);
 	setPosition(position);
 	setSpecies("O");
+
+	this->ancestorHistory = nullptr;
+    this->ancestorHistorySize = 0;
 }
+
+Organism::Organism() : power(0), position(0, 0), species("O"), ancestorHistory(nullptr), ancestorHistorySize(0) {}
 
 int Organism::getPower() { return this->power; }
 void Organism::setPower(int power) { this->power = power; }

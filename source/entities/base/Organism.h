@@ -4,6 +4,11 @@
 
 using namespace std;
 
+struct LifeSpan {
+    int birthTurn;
+    int deathTurn;
+};
+
 class Organism {
 
 private:
@@ -11,9 +16,12 @@ private:
 	Position position;
 	string species;
 
+	LifeSpan* ancestorHistory;
+	int ancestorHistorySize;
+
 public:
 	Organism(int power, Position position);
-	Organism() : power(0), position(0, 0), species("O") {};
+	Organism();
 
 	int getPower();
 	void setPower(int power);
