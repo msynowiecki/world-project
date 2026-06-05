@@ -1,4 +1,5 @@
 #include <vector>
+
 #include "Organism.h"
 #include "../World.h"
 
@@ -14,9 +15,7 @@ Organism::Organism(Position position, World* world) {
     this->world = world;
 }
 
-Organism::Organism() 
-    : power(0), initiative(0), position(0, 0), species("O"), 
-      liveLength(0), reproductionPower(0), world(nullptr) {}
+Organism::Organism() : power(0), initiative(0), position(0, 0), species("O"), liveLength(0), reproductionPower(0), world(nullptr) {}
 
 int Organism::getPower() const { return this->power; }
 void Organism::setPower(int power) { this->power = power; }
@@ -27,8 +26,8 @@ void Organism::setInitiative(int initiative) { this->initiative = initiative; }
 Position Organism::getPosition() const { return this->position; }
 void Organism::setPosition(Position position) { this->position = position; }
 
-string Organism::getSpecies() const { return this->species; }
-void Organism::setSpecies(string species) { this->species = species; }
+std::string Organism::getSpecies() const { return this->species; }
+void Organism::setSpecies(std::string species) { this->species = species; }
 
 int Organism::getLiveLength() const { return this->liveLength; }
 void Organism::setLiveLength(int liveLength) { this->liveLength = liveLength; }
@@ -38,7 +37,7 @@ void Organism::setReproductionPower(int reproductionPower) { this->reproductionP
 
 World* Organism::getWorld() const { return this->world; }
 
-const vector<LifeSpan>& Organism::getAncestorHistory() const { 
+const std::vector<LifeSpan>& Organism::getAncestorHistory() const { 
     return this->ancestorHistory; 
 }
 
@@ -47,8 +46,8 @@ void Organism::addAncestorHistory(int birthTurn, int deathTurn) {
     this->ancestorHistory.push_back(newSpan);
 }
 
-string Organism::toString() {
-    string historyString = ", history: [";
+std::string Organism::toString() {
+    std::string historyString = ", history: [";
 
     for (size_t iterator = 0; iterator < this->ancestorHistory.size(); iterator++) {
         historyString += "(" + to_string(this->ancestorHistory[iterator].birthTurn) + "->" + to_string(this->ancestorHistory[iterator].deathTurn) + ")";
@@ -68,8 +67,8 @@ string Organism::toString() {
         historyString + "}";
 }
 
-vector<Action> Organism::consequences(Organism* attackingOrganism) {
-    vector<Action> result;
+std::vector<Action> Organism::consequences(Organism* attackingOrganism) {
+    std::vector<Action> result;
 
     if (this->getPower() > attackingOrganism->getPower()) {
         result.push_back(Action(ActionMapper::A_REMOVE, Position(-1, -1), 0, attackingOrganism));

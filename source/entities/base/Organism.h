@@ -4,14 +4,13 @@
 
 #include "../../models/Position.h"
 #include "../../models/Action.h"
-#include "../../World.h"
-
-using namespace std;
 
 struct LifeSpan {
     int birthTurn;
     int deathTurn;
 };
+
+class World;
 
 class Organism {
 
@@ -19,12 +18,12 @@ private:
 	int power;
 	int initiative;
 	Position position;
-	string species;
+	std::string species;
 
 	int liveLength;
 	int reproductionPower;
 
-	vector<LifeSpan> ancestorHistory;
+	std::vector<LifeSpan> ancestorHistory;
 
 	World* world;
 
@@ -43,8 +42,8 @@ public:
     Position getPosition() const;
     void setPosition(Position position);
 
-    string getSpecies() const;
-    void setSpecies(string species);
+    std::string getSpecies() const;
+    void setSpecies(std::string species);
 
     int getLiveLength() const;
     void setLiveLength(int liveLength);
@@ -54,18 +53,18 @@ public:
 
     World* getWorld() const;
 
-    const vector<LifeSpan>& getAncestorHistory() const;
+    const std::vector<LifeSpan>& getAncestorHistory() const;
 
     void addAncestorHistory(int birthTurn, int deathTurn);
 
-    string toString();
+    std::string toString();
 
-    virtual vector<Action> move() = 0;
-    virtual vector<Action> action() = 0;
+    virtual std::vector<Action> move() = 0;
+    virtual std::vector<Action> action() = 0;
     
     virtual void initialParams() = 0;
     virtual Organism* clone() = 0;
 
-    vector<Action> consequences(Organism* attackingOrganism);
+    std::vector<Action> consequences(Organism* attackingOrganism);
     bool ifReproduce();
 };
