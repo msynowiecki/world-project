@@ -18,25 +18,25 @@ Organism::Organism()
     : power(0), initiative(0), position(0, 0), species("O"), 
       liveLength(0), reproductionPower(0), world(nullptr) {}
 
-int Organism::getPower() { return this->power; }
+int Organism::getPower() const { return this->power; }
 void Organism::setPower(int power) { this->power = power; }
 
-int Organism::getInitiative() { return this->initiative; }
+int Organism::getInitiative() const { return this->initiative; }
 void Organism::setInitiative(int initiative) { this->initiative = initiative; }
 
-Position Organism::getPosition() { return this->position; }
+Position Organism::getPosition() const { return this->position; }
 void Organism::setPosition(Position position) { this->position = position; }
 
-string Organism::getSpecies() { return this->species; }
+string Organism::getSpecies() const { return this->species; }
 void Organism::setSpecies(string species) { this->species = species; }
 
-int Organism::getLiveLength() { return this->liveLength; }
+int Organism::getLiveLength() const { return this->liveLength; }
 void Organism::setLiveLength(int liveLength) { this->liveLength = liveLength; }
 
-int Organism::getReproductionPower() { return this->reproductionPower; }
+int Organism::getReproductionPower() const { return this->reproductionPower; }
 void Organism::setReproductionPower(int reproductionPower) { this->reproductionPower = reproductionPower; }
 
-World* Organism::getWorld() { return this->world; }
+World* Organism::getWorld() const { return this->world; }
 
 const vector<LifeSpan>& Organism::getAncestorHistory() const { 
     return this->ancestorHistory; 
@@ -51,8 +51,7 @@ string Organism::toString() {
     string historyString = ", history: [";
 
     for (size_t iterator = 0; iterator < this->ancestorHistory.size(); iterator++) {
-        historyString += "(" + to_string(this->ancestorHistory[iterator].birthTurn) + 
-                         "->" + to_string(this->ancestorHistory[iterator].deathTurn) + ")";
+        historyString += "(" + to_string(this->ancestorHistory[iterator].birthTurn) + "->" + to_string(this->ancestorHistory[iterator].deathTurn) + ")";
         
         if (iterator < this->ancestorHistory.size() - 1) {
             historyString += ", ";

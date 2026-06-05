@@ -34,25 +34,25 @@ public:
 
     virtual ~Organism() = default;
 
-    int getPower();
+    int getPower() const;
     void setPower(int power);
 
-    int getInitiative();
+    int getInitiative() const;
     void setInitiative(int initiative);
 
-    Position getPosition();
+    Position getPosition() const;
     void setPosition(Position position);
 
-    string getSpecies();
+    string getSpecies() const;
     void setSpecies(string species);
 
-    int getLiveLength();
+    int getLiveLength() const;
     void setLiveLength(int liveLength);
 
-    int getReproductionPower();
+    int getReproductionPower() const;
     void setReproductionPower(int reproductionPower);
 
-    World* getWorld();
+    World* getWorld() const;
 
     const vector<LifeSpan>& getAncestorHistory() const;
 
