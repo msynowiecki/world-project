@@ -1,128 +1,30 @@
 #include <vector>
 #include "Organism.h"
+#include "../World.h"
 
 Organism::Organism(Position position, World* world) {
-	this->power = 0;
-    this->iniciative = 0;
-	this->position = position;
-	this->species = "O";
+    this->power = 0;
+    this->initiative = 0;
+    this->position = position;
+    this->species = "O";
 
     this->liveLength = 0;
     this->reproductionPower = 0;
-
-	this->ancestorHistory = nullptr;
-    this->ancestorHistorySize = 0;
-
+    
     this->world = world;
 }
 
-Organism::Organism() : power(0), iniciative(0), position(0, 0), species("O"), liveLength(0), reproductionPower(0), ancestorHistory(nullptr), ancestorHistorySize(0), world(nullptr) {}
-
-Organism::Organism(const Organism& other) {
-    this->power = other.power;
-    this->iniciative = other.iniciative;
-    this->position = other.position;
-    this->species = other.species;
-
-    this->liveLength = other.liveLength;
-    this->reproductionPower = other.reproductionPower;
-
-    this->ancestorHistorySize = other.ancestorHistorySize;
-
-    this->world = other.world;
-
-    if (other.ancestorHistory != nullptr) {
-        this->ancestorHistory = new LifeSpan[other.ancestorHistorySize];
-
-        for (int iterator = 0; iterator < other.ancestorHistorySize; iterator++) {
-            this->ancestorHistory[iterator] = other.ancestorHistory[iterator];
-        }
-    } else {
-        this->ancestorHistory = nullptr;
-    }
-}
-
-Organism::Organism(Organism&& other) noexcept {
-    this->power = other.power;
-    this->iniciative = other.iniciative;
-    this->position = other.position;
-    this->species = other.species;
-
-    this->liveLength = other.liveLength;
-    this->reproductionPower = other.reproductionPower;
-
-    this->ancestorHistory = other.ancestorHistory;
-    this->ancestorHistorySize = other.ancestorHistorySize;
-
-    this->world = other.world;
-    
-    other.ancestorHistory = nullptr;
-    other.ancestorHistorySize = 0;
-}
-
-Organism& Organism::operator=(const Organism& other) {
-    if (this == &other) return *this;
-
-    delete[] this->ancestorHistory;
-
-    this->power = other.power;
-    this->iniciative = other.iniciative;
-    this->position = other.position;
-    this->species = other.species;
-
-    this->liveLength = other.liveLength;
-    this->reproductionPower = other.reproductionPower;
-
-    this->ancestorHistorySize = other.ancestorHistorySize;
-
-    this->world = other.world;
-
-    if (other.ancestorHistory != nullptr) {
-        this->ancestorHistory = new LifeSpan[other.ancestorHistorySize];
-
-        for (int iterator = 0; iterator < other.ancestorHistorySize; iterator++) {
-            this->ancestorHistory[iterator] = other.ancestorHistory[iterator];
-        }
-    } else {
-        this->ancestorHistory = nullptr;
-    }
-
-    return *this;
-}
-
-Organism& Organism::operator=(Organism&& other) noexcept {
-    if (this == &other) return *this;
-
-    delete[] this->ancestorHistory;
-
-    this->power = other.power;
-    this->iniciative = other.iniciative;
-    this->position = other.position;
-    this->species = other.species;
-
-    this->liveLength = other.liveLength;
-    this->reproductionPower = other.reproductionPower;
-
-    this->ancestorHistory = other.ancestorHistory;
-    this->ancestorHistorySize = other.ancestorHistorySize;
-
-    this->world = other.world;
-
-    other.ancestorHistory = nullptr;
-    other.ancestorHistorySize = 0;
-
-    return *this;
-}
-
-Organism::~Organism() { delete[] ancestorHistory; }
+Organism::Organism() 
+    : power(0), initiative(0), position(0, 0), species("O"), 
+      liveLength(0), reproductionPower(0), world(nullptr) {}
 
 int Organism::getPower() { return this->power; }
 void Organism::setPower(int power) { this->power = power; }
 
-int Organism::getInitiative() { return this->iniciative; }
-void Organism::setInitiative(int initiative) { this->iniciative = initiative; }
+int Organism::getInitiative() { return this->initiative; }
+void Organism::setInitiative(int initiative) { this->initiative = initiative; }
 
-Position Organism::getPosition(){ return this->position; }
+Position Organism::getPosition() { return this->position; }
 void Organism::setPosition(Position position) { this->position = position; }
 
 string Organism::getSpecies() { return this->species; }
@@ -136,30 +38,25 @@ void Organism::setReproductionPower(int reproductionPower) { this->reproductionP
 
 World* Organism::getWorld() { return this->world; }
 
-LifeSpan* Organism::getAncestorHistory() { return this->ancestorHistory; }
+const vector<LifeSpan>& Organism::getAncestorHistory() const { 
+    return this->ancestorHistory; 
+}
 
-void Organism::addAncestorHistory(int birth, int death){
-    LifeSpan* newHistory = new LifeSpan[this->ancestorHistorySize + 1];
-
-    for (int iterator = 0; iterator < this->ancestorHistorySize; iterator++) {
-        newHistory[iterator] = this->ancestorHistory[iterator];
-    }
-
-    newHistory[this->ancestorHistorySize].birthTurn = birth;
-    newHistory[this->ancestorHistorySize].deathTurn = death;
-
-    delete[] this->ancestorHistory;
-    this->ancestorHistory = newHistory;
-    this->ancestorHistorySize++;
+void Organism::addAncestorHistory(int birthTurn, int deathTurn) {
+    LifeSpan newSpan = { birthTurn, deathTurn };
+    this->ancestorHistory.push_back(newSpan);
 }
 
 string Organism::toString() {
     string historyString = ", history: [";
 
-    for(int iterator=0; iterator<ancestorHistorySize; iterator++) {
-        historyString += "(" + to_string(ancestorHistory[iterator].birthTurn) + "->" + to_string(ancestorHistory[iterator].deathTurn) + ")";
+    for (size_t iterator = 0; iterator < this->ancestorHistory.size(); iterator++) {
+        historyString += "(" + to_string(this->ancestorHistory[iterator].birthTurn) + 
+                         "->" + to_string(this->ancestorHistory[iterator].deathTurn) + ")";
         
-        if(iterator < ancestorHistorySize - 1) historyString += ", ";
+        if (iterator < this->ancestorHistory.size() - 1) {
+            historyString += ", ";
+        }
     }
     historyString += "]";
 
@@ -189,4 +86,3 @@ bool Organism::ifReproduce() {
     }
     return false;
 }
-

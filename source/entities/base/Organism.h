@@ -17,61 +17,55 @@ class Organism {
 
 private:
 	int power;
-	int iniciative;
+	int initiative;
 	Position position;
 	string species;
 
 	int liveLength;
 	int reproductionPower;
 
-	LifeSpan* ancestorHistory;
-	int ancestorHistorySize;
+	vector<LifeSpan> ancestorHistory;
 
 	World* world;
 
 public:
 	Organism(Position position, World* world);
-	Organism();
+    Organism();
 
-	Organism(const Organism& other);
-	Organism(Organism&& other) noexcept;
+    virtual ~Organism() = default;
 
-	Organism& operator=(const Organism& other);
-	Organism& operator=(Organism&& other) noexcept;
+    int getPower();
+    void setPower(int power);
 
-	virtual ~Organism();
+    int getInitiative();
+    void setInitiative(int initiative);
 
-	int getPower();
-	void setPower(int power);
+    Position getPosition();
+    void setPosition(Position position);
 
-	int getInitiative();
-	void setInitiative(int initiative);
+    string getSpecies();
+    void setSpecies(string species);
 
-	Position getPosition();
-	void setPosition(Position position);
+    int getLiveLength();
+    void setLiveLength(int liveLength);
 
-	string getSpecies();
-	void setSpecies(string species);
+    int getReproductionPower();
+    void setReproductionPower(int reproductionPower);
 
-	int getLiveLength();
-	void setLiveLength(int liveLength);
+    World* getWorld();
 
-	int getReproductionPower();
-	void setReproductionPower(int reproductionPower);
+    const vector<LifeSpan>& getAncestorHistory() const;
 
-	World* getWorld();
+    void addAncestorHistory(int birthTurn, int deathTurn);
 
-	LifeSpan* getAncestorHistory();
+    string toString();
 
-	void addAncestorHistory(int birthTurn, int deathTurn);
+    virtual vector<Action> move() = 0;
+    virtual vector<Action> action() = 0;
+    
+    virtual void initialParams() = 0;
+    virtual Organism* clone() = 0;
 
-	string toString();
-
-	virtual void move() = 0;
-	virtual void action() = 0;
-	virtual void initialParams() = 0;
-	virtual Organism* clone() = 0;
-
-	vector<Action> consequences(Organism* attackingOrganism);
+    vector<Action> consequences(Organism* attackingOrganism);
     bool ifReproduce();
 };
