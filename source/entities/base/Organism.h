@@ -2,7 +2,7 @@
 #include <string>
 #include <vector>
 
-#include "../../services/Position.h"
+#include "../../models/Position.h"
 #include "../../World.h"
 
 using namespace std;
