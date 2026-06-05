@@ -1,6 +1,9 @@
 #pragma once
 #include <string>
+#include <vector>
+
 #include "../../services/Position.h"
+#include "../../World.h"
 
 using namespace std;
 
@@ -13,14 +16,20 @@ class Organism {
 
 private:
 	int power;
+	int iniciative;
 	Position position;
 	string species;
+
+	int liveLength;
+	int reprodctionPower;
 
 	LifeSpan* ancestorHistory;
 	int ancestorHistorySize;
 
+	World* world;
+
 public:
-	Organism(int power, Position position);
+	Organism(Position position, World* world);
 	Organism();
 
 	Organism(const Organism& other);
@@ -29,10 +38,13 @@ public:
 	Organism& operator=(const Organism& other);
 	Organism& operator=(Organism&& other) noexcept;
 
-	~Organism();
+	virtual ~Organism();
 
 	int getPower();
 	void setPower(int power);
+
+	int getInitiative();
+	void setInitiative(int initiative);
 
 	Position getPosition();
 	void setPosition(Position position);
@@ -40,9 +52,22 @@ public:
 	string getSpecies();
 	void setSpecies(string species);
 
+	int getLiveLength();
+	void setLiveLength(int liveLength);
+
+	int getReprodctionPower();
+	void setReprodctionPower(int reprodctionPower);
+
+	World* getWorld();
+
+	LifeSpan* getAncestorHistory();
+
 	void addAncestorHistory(int birthTurn, int deathTurn);
 
 	string toString();
 
-	virtual void move(int directionX, int directionY);
+	virtual void move() = 0;
+	virtual void action() = 0;
+	virtual void initialParams() = 0;
+	virtual Organism* clone() = 0;
 };
