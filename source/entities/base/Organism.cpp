@@ -8,7 +8,7 @@ Organism::Organism(Position position, World* world) {
 	this->species = "O";
 
     this->liveLength = 0;
-    this->reprodctionPower = 0;
+    this->reproductionPower = 0;
 
 	this->ancestorHistory = nullptr;
     this->ancestorHistorySize = 0;
@@ -16,7 +16,7 @@ Organism::Organism(Position position, World* world) {
     this->world = world;
 }
 
-Organism::Organism() : power(0), iniciative(0), position(0, 0), species("O"), liveLength(0), reprodctionPower(0), ancestorHistory(nullptr), ancestorHistorySize(0), world(nullptr) {}
+Organism::Organism() : power(0), iniciative(0), position(0, 0), species("O"), liveLength(0), reproductionPower(0), ancestorHistory(nullptr), ancestorHistorySize(0), world(nullptr) {}
 
 Organism::Organism(const Organism& other) {
     this->power = other.power;
@@ -25,7 +25,7 @@ Organism::Organism(const Organism& other) {
     this->species = other.species;
 
     this->liveLength = other.liveLength;
-    this->reprodctionPower = other.reprodctionPower;
+    this->reproductionPower = other.reproductionPower;
 
     this->ancestorHistorySize = other.ancestorHistorySize;
 
@@ -49,7 +49,7 @@ Organism::Organism(Organism&& other) noexcept {
     this->species = other.species;
 
     this->liveLength = other.liveLength;
-    this->reprodctionPower = other.reprodctionPower;
+    this->reproductionPower = other.reproductionPower;
 
     this->ancestorHistory = other.ancestorHistory;
     this->ancestorHistorySize = other.ancestorHistorySize;
@@ -71,7 +71,7 @@ Organism& Organism::operator=(const Organism& other) {
     this->species = other.species;
 
     this->liveLength = other.liveLength;
-    this->reprodctionPower = other.reprodctionPower;
+    this->reproductionPower = other.reproductionPower;
 
     this->ancestorHistorySize = other.ancestorHistorySize;
 
@@ -101,7 +101,7 @@ Organism& Organism::operator=(Organism&& other) noexcept {
     this->species = other.species;
 
     this->liveLength = other.liveLength;
-    this->reprodctionPower = other.reprodctionPower;
+    this->reproductionPower = other.reproductionPower;
 
     this->ancestorHistory = other.ancestorHistory;
     this->ancestorHistorySize = other.ancestorHistorySize;
@@ -131,8 +131,8 @@ void Organism::setSpecies(string species) { this->species = species; }
 int Organism::getLiveLength() { return this->liveLength; }
 void Organism::setLiveLength(int liveLength) { this->liveLength = liveLength; }
 
-int Organism::getReprodctionPower() { return this->reprodctionPower; }
-void Organism::setReprodctionPower(int reprodctionPower) { this->reprodctionPower = reprodctionPower; }
+int Organism::getReproductionPower() { return this->reproductionPower; }
+void Organism::setReproductionPower(int reproductionPower) { this->reproductionPower = reproductionPower; }
 
 World* Organism::getWorld() { return this->world; }
 
@@ -168,7 +168,25 @@ string Organism::toString() {
         ", initiative: " + to_string(getInitiative()) + 
         ", position: " + getPosition().toString() + 
         ", liveLength: " + to_string(getLiveLength()) +
-        ", reproductionPower: " + to_string(getReprodctionPower()) +
+        ", reproductionPower: " + to_string(getReproductionPower()) +
         historyString + "}";
+}
+
+vector<Action> Organism::consequences(Organism* attackingOrganism) {
+    vector<Action> result;
+
+    if (this->getPower() > attackingOrganism->getPower()) {
+        result.push_back(Action(ActionMapper::A_REMOVE, Position(-1, -1), 0, attackingOrganism));
+    } else {
+        result.push_back(Action(ActionMapper::A_REMOVE, Position(-1, -1), 0, this));
+    }
+    return result;
+}
+
+bool Organism::ifReproduce() {
+    if (this->getPower() >= this->getReproductionPower()) {
+        return true;
+    }
+    return false;
 }
 

@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "../../models/Position.h"
+#include "../../models/Action.h"
 #include "../../World.h"
 
 using namespace std;
@@ -21,7 +22,7 @@ private:
 	string species;
 
 	int liveLength;
-	int reprodctionPower;
+	int reproductionPower;
 
 	LifeSpan* ancestorHistory;
 	int ancestorHistorySize;
@@ -55,8 +56,8 @@ public:
 	int getLiveLength();
 	void setLiveLength(int liveLength);
 
-	int getReprodctionPower();
-	void setReprodctionPower(int reprodctionPower);
+	int getReproductionPower();
+	void setReproductionPower(int reproductionPower);
 
 	World* getWorld();
 
@@ -70,4 +71,7 @@ public:
 	virtual void action() = 0;
 	virtual void initialParams() = 0;
 	virtual Organism* clone() = 0;
+
+	vector<Action> consequences(Organism* attackingOrganism);
+    bool ifReproduce();
 };
