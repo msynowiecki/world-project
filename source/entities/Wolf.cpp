@@ -1,8 +1,8 @@
 #include <cstdlib>
 
 #include "Wolf.h"
-#include "Plant.h"
-#include "../../World.h"
+#include "base/Plant.h"
+#include "../World.h"
 
 Wolf::Wolf(Position position, World* world) : Animal(position, world) {
     this->initialParams();
