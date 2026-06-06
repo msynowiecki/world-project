@@ -4,6 +4,7 @@
 #include "source/World.h"
 #include "source/models/Position.h"
 #include "source/entities/Grass.h"
+#include "source/entities/Sheep.h"
 
 int main() {
     srand(time(NULL));
@@ -15,6 +16,9 @@ int main() {
 
     Organism* grass2 = new Grass(Position(2, 4), &livingWorld);
     livingWorld.addOrganism(grass2);
+
+    Organism* sheep1 = new Sheep(Position(0, 0), &livingWorld);
+    livingWorld.addOrganism(sheep1);
 
     system("clear"); 
 
