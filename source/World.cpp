@@ -73,7 +73,13 @@ void World::makeTurn() {
     this->organisms = remainingOrganisms;
 
     std::vector<Organism*> longLivingOrganisms;
+
     for (Organism* organism : this->organisms) {
+        if (!this->positionOnBoard(organism->getPosition())) {
+            delete organism; 
+            continue;
+        }
+
         organism->setLiveLength(organism->getLiveLength() - 1);
         organism->setPower(organism->getPower() + 1);
 
@@ -119,6 +125,7 @@ void World::makeMove(const Action& action) {
             break;
             
         case ActionMapper::A_REMOVE:
+            std::cout << action.getOrganism()->getSpecies() << " has been eaten!" << std::endl;
             action.getOrganism()->setPosition(Position(-1, -1));
             break;
     }
