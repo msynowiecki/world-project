@@ -65,6 +65,6 @@ public:
     virtual void initialParams() = 0;
     virtual Organism* clone() = 0;
 
-    std::vector<Action> consequences(Organism* attackingOrganism);
+    virtual std::vector<Action> consequences(Organism* attackingOrganism);
     bool ifReproduce();
 };
