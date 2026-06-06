@@ -33,11 +33,17 @@ std::vector<Action> Wolf::move() {
 
         Organism* metOrganism = this->getWorld()->getOrganismFromPosition(newPosition);
         
-        if (metOrganism != nullptr && dynamic_cast<Plant*>(metOrganism) == nullptr) {
-            std::vector<Action> encounterConsequences = metOrganism->consequences(this);
-            result.insert(result.end(), encounterConsequences.begin(), encounterConsequences.end());
+        if (metOrganism != nullptr) {
+            if (dynamic_cast<Plant*>(metOrganism) == nullptr) {
+                std::vector<Action> encounterConsequences = metOrganism->consequences(this);
+                result.insert(result.end(), encounterConsequences.begin(), encounterConsequences.end());
+            } else {
+                result.push_back(Action(ActionMapper::A_REMOVE, Position(-1, -1), 0, metOrganism));
+                result.push_back(Action(ActionMapper::A_INCREASEPOWER, this->getPosition(), 2, this));
+            }
         }
     }
+
     return result;
 }
 
