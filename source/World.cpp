@@ -41,18 +41,22 @@ void World::makeTurn() {
 
     for (size_t iterator = 0; iterator < this->organisms.size(); ++iterator) {
         Organism* organism = this->organisms[iterator];
+        
         if (this->positionOnBoard(organism->getPosition())) {
             
             actions = organism->move();
-            for (const Action& action : actions) {
-                this->makeMove(action);
-            }
-            actions.clear();
 
-            actions = organism->action();
             for (const Action& action : actions) {
                 this->makeMove(action);
             }
+
+            actions.clear();
+            actions = organism->action();
+
+            for (const Action& action : actions) {
+                this->makeMove(action);
+            }
+
             actions.clear();
         }
     }
@@ -65,6 +69,7 @@ void World::makeTurn() {
             delete organism;
         }
     }
+
     this->organisms = remainingOrganisms;
 
     std::vector<Organism*> longLivingOrganisms;
@@ -79,6 +84,7 @@ void World::makeTurn() {
             longLivingOrganisms.push_back(organism);
         }
     }
+
     this->organisms = longLivingOrganisms;
 
     for (Organism* organism : this->newOrganisms) {
@@ -88,6 +94,7 @@ void World::makeTurn() {
             delete organism;
         }
     }
+
     this->newOrganisms.clear();
 
     std::sort(this->organisms.begin(), this->organisms.end(), compareOrganisms);
@@ -143,6 +150,7 @@ Organism* World::getOrganismFromPosition(const Position& position) const {
             return organism;
         }
     }
+    
     for (Organism* organism : this->newOrganisms) {
         if (organism->getPosition().getX() == position.getX() && organism->getPosition().getY() == position.getY()) {
             return organism;
