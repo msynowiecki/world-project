@@ -1,6 +1,6 @@
 #include "Action.h"
 #include "Position.h"
-#include "../../entities/base/Organism.h"
+#include "../entities/base/Organism.h"
 
 Action::Action(ActionMapper action, Position position, int value, Organism* organism) 
     : actionType(action), position(position), value(value), organism(organism) {}

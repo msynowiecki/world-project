@@ -1,10 +1,9 @@
 #pragma once
 #include <string>
+
 #include "Position.h"
 
-using namespace std;
-
-class Organism; 
+class Organism;
 
 enum class ActionMapper {
     A_MOVE = 0,
@@ -31,5 +30,5 @@ public:
     
     Organism* getOrganism() const;
 
-    string toString() const;
+    std::string toString() const;
 };
