@@ -1,15 +1,14 @@
 #pragma once
 
-#include "base/Animal.h"
+#include "../base/Animal.h"
 
-class Wolf : public Animal {
+class Sheep : public Animal {
 
 public:
-    Wolf(Position position, World* world);
+    Sheep(Position position, World* world);
 
     void initialParams() override;
     Organism* clone() override;
-    
-    std::vector<Action> move() override;
+
     std::vector<Position> getNeighboringPosition() override;
 };

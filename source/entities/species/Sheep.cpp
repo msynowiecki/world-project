@@ -1,5 +1,5 @@
 #include "Sheep.h"
-#include "../World.h"
+#include "../../World.h"
 
 Sheep::Sheep(Position position, World* world) : Animal(position, world) {
     this->initialParams();
