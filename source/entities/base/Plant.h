@@ -16,5 +16,5 @@ public:
     std::vector<Action> action() override;
 
 protected:
-    std::vector<Position> getFreeNeighboringPosition(Position position);
+    std::vector<Position> getFreeNeighboringPosition();
 };

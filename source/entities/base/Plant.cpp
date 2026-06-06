@@ -11,11 +11,11 @@ std::vector<Action> Plant::action() {
     std::vector<Action> result;
 
     if (this->ifReproduce()) {
-        std::vector<Position> freePositions = this->getFreeNeighboringPosition(this->getPosition());
+        std::vector<Position> availablePositions = this->getFreeNeighboringPosition();
 
-        if (!freePositions.empty()) {
-            int randomIndex = rand() % freePositions.size();
-            Position newPosition = freePositions[randomIndex];
+        if (!availablePositions.empty()) {
+            int randomIndex = rand() % availablePositions.size();
+            Position newPosition = availablePositions[randomIndex];
 
             Organism* newPlant = this->clone();
             newPlant->initialParams();
@@ -29,10 +29,10 @@ std::vector<Action> Plant::action() {
     return result;
 }
 
-std::vector<Position> Plant::getFreeNeighboringPosition(Position position) {
+std::vector<Position> Plant::getFreeNeighboringPosition() {
     if (this->getWorld() == nullptr) {
         return std::vector<Position>();
     }
     
-    return this->getWorld()->filterFreePositions(this->getWorld()->getNeighboringPositions(position));
+    return this->getWorld()->filterFreePositions(this->getWorld()->getNeighboringPositions(this->getPosition()));
 }
