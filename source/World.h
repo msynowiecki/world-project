@@ -43,6 +43,7 @@ public:
     std::vector<Position> getNeighboringPositions(const Position& position) const;
     std::vector<Position> filterFreePositions(const std::vector<Position>& fields) const;
     std::vector<Position> filterPositionsWithoutAnimals(const std::vector<Position>& fields) const;
+    std::vector<Position> filterPositionsWithOtherSpecies(const std::vector<Position>& fields, std::string species) const;
 
     std::string toString() const;
 };

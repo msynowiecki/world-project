@@ -201,6 +201,20 @@ std::vector<Position> World::filterPositionsWithoutAnimals(const std::vector<Pos
     return result;
 }
 
+std::vector<Position> World::filterPositionsWithOtherSpecies(const std::vector<Position>& fields, std::string species) const {
+    std::vector<Position> result;
+
+    for (const Position& field : fields) {
+        Organism* currentOrganism = this->getOrganismFromPosition(field);
+        
+        if (currentOrganism == nullptr || currentOrganism->getSpecies() != species) {
+            result.push_back(field);
+        }
+    }
+    
+    return result;
+}
+
 std::string World::toString() const {
     std::string result = "\nturn: " + std::to_string(this->turn) + "\n";
 
