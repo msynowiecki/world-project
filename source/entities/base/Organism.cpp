@@ -1,7 +1,7 @@
 #include <vector>
 
 #include "Organism.h"
-#include "../World.h"
+#include "../../World.h"
 
 Organism::Organism(Position position, World* world) {
     this->power = 0;
