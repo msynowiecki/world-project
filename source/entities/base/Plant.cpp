@@ -1,15 +1,16 @@
 #include "Plant.h"
 #include "../../Environment.h"
+#include "../../models/actions/Add.h"
 
 Plant::Plant(Position position, Environment* environment) : Organism(position, environment) {}
 
-std::vector<Action> Plant::move() {
-    std::vector<Action> result;
+std::vector<Action*> Plant::move() {
+    std::vector<Action*> result;
     return result;
 }
 
-std::vector<Action> Plant::action() {
-    std::vector<Action> result;
+std::vector<Action*> Plant::action() {
+    std::vector<Action*> result;
 
     if (this->ifReproduce()) {
         std::vector<Position> availablePositions = this->getFreeNeighboringPosition();
@@ -24,7 +25,7 @@ std::vector<Action> Plant::action() {
 
             this->setPower(this->getPower() / 2);
 
-            result.push_back(Action(ActionMapper::A_ADD, newPosition, 0, newPlant));
+            result.push_back(new Add(newPlant));
         }
     }
     return result;

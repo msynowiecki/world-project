@@ -57,13 +57,13 @@ public:
 
     std::string toString();
 
-    virtual std::vector<Action> move() = 0;
-    virtual std::vector<Action> action() = 0;
+    virtual std::vector<Action*> move() = 0;
+    virtual std::vector<Action*> action() = 0;
     
     virtual void initialParams() = 0;
     virtual Organism* clone() = 0;
 
-    virtual std::vector<Action> consequences(Organism* attackingOrganism);
+    virtual std::vector<Action*> consequences(Organism* attackingOrganism);
 
     virtual bool isPlant() const;
     virtual bool isAnimal() const;

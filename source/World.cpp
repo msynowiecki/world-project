@@ -4,6 +4,7 @@
 #include "World.h"
 #include "entities/base/Organism.h"
 #include "entities/base/Plant.h"
+#include "models/Action.h"
 
 World::World(int worldX, int worldY) 
     : worldX(worldX), worldY(worldY), turn(0), separator('.') {}
@@ -33,27 +34,12 @@ void World::makeTurn() {
     this->turn += 1;
 }
 
-void World::makeMove(const Action& action) {
-    std::cout << action.toString() << std::endl;
+void World::makeMove(Action* action) {
+    if (action == nullptr) return;
 
-    switch (action.getActionType()) {
-        case ActionMapper::A_ADD:
-            this->newOrganisms.push_back(action.getOrganism());
-            break;
-            
-        case ActionMapper::A_INCREASEPOWER:
-            action.getOrganism()->setPower(action.getOrganism()->getPower() + action.getValue());
-            break;
-            
-        case ActionMapper::A_MOVE:
-            action.getOrganism()->setPosition(action.getPosition());
-            break;
-            
-        case ActionMapper::A_REMOVE:
-            std::cout << action.getOrganism()->getSpecies() << " has been eaten!" << std::endl;
-            action.getOrganism()->setPosition(Position(-1, -1));
-            break;
-    }
+    std::cout << action->toString() << std::endl;
+
+    action->execute(this);
 }
 
 bool World::addOrganism(Organism* newOrganism) {
@@ -63,7 +49,6 @@ bool World::addOrganism(Organism* newOrganism) {
 
     if (this->positionOnBoard(newOrgPosition)) {
         this->organisms.push_back(newOrganism);
-
         return true;
     }
     
@@ -95,6 +80,7 @@ std::vector<Position> World::getNeighboringPositions(const Position& position) c
     for (int y = -1; y <= 1; ++y) {
         for (int x = -1; x <= 1; ++x) {
             Position pomPosition(position.getX() + x, position.getY() + y);
+            
             if (this->positionOnBoard(pomPosition) && !(y == 0 && x == 0)) {
                 result.push_back(pomPosition);
             }

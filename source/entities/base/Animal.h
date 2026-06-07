@@ -18,8 +18,8 @@ public:
     Position getLastPosition() const;
     void setLastPosition(Position value);
 
-    std::vector<Action> move() override;
-    std::vector<Action> action() override;
+    std::vector<Action*> move() override;
+    std::vector<Action*> action() override;
 
     std::vector<Position> getFreeNeighboringPosition();
     virtual std::vector<Position> getNeighboringPosition();

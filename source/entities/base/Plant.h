@@ -13,8 +13,8 @@ public:
 
     virtual ~Plant() = default;
 
-    std::vector<Action> move() override;
-    std::vector<Action> action() override;
+    std::vector<Action*> move() override;
+    std::vector<Action*> action() override;
 
 protected:
     std::vector<Position> getFreeNeighboringPosition();

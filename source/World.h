@@ -36,7 +36,7 @@ public:
     void setNewOrganisms(const std::vector<Organism*>& newOrganisms);
 
     void makeTurn(); 
-    void makeMove(const Action& action);
+    void makeMove(Action* action);
     bool addOrganism(Organism* newOrganism);
 
     bool positionOnBoard(const Position& position) const;

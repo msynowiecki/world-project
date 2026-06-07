@@ -10,6 +10,6 @@ public:
     void initialParams() override;
     Organism* clone() override;
     
-    std::vector<Action> move() override;
+    std::vector<Action*> move() override;
     std::vector<Position> getNeighboringPosition() override;
 };

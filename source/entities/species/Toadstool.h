@@ -10,5 +10,5 @@ public:
     void initialParams() override;
     Organism* clone() override;
     
-    std::vector<Action> consequences(Organism* attackingOrganism) override;
+    std::vector<Action*> consequences(Organism* attackingOrganism) override;
 };

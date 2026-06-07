@@ -24,7 +24,7 @@ void Turner::run(int totalTurns) {
 }
 
 void Turner::executeTurnLogic() {
-    std::vector<Action> actions;
+    std::vector<Action*> actions;
     
     std::vector<Organism*>& organisms = world.getOrganisms();
     std::vector<Organism*>& newOrganisms = world.getNewOrganisms();
@@ -34,16 +34,14 @@ void Turner::executeTurnLogic() {
         
         if (world.positionOnBoard(organism->getPosition())) {
             actions = organism->move();
-            for (const Action& action : actions) {
+            for (Action* action : actions) {
                 world.makeMove(action);
             }
-            actions.clear();
 
             actions = organism->action();
-            for (const Action& action : actions) {
+            for (Action* action : actions) {
                 world.makeMove(action);
             }
-            actions.clear();
         }
     }
 

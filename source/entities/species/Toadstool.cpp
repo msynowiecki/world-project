@@ -1,4 +1,5 @@
 #include "Toadstool.h"
+#include "../../models/actions/Remove.h"
 
 Toadstool::Toadstool(Position position, Environment* environment) : Plant(position, environment) {
     this->initialParams();
@@ -16,14 +17,14 @@ Organism* Toadstool::clone() {
     return new Toadstool(*this);
 }
 
-std::vector<Action> Toadstool::consequences(Organism* attackingOrganism) {
-    std::vector<Action> result;
+std::vector<Action*> Toadstool::consequences(Organism* attackingOrganism) {
+    std::vector<Action*> result;
 
     if (this->getPower() > attackingOrganism->getPower()) {
-        result.push_back(Action(ActionMapper::A_REMOVE, Position(-1, -1), 0, attackingOrganism));
+        result.push_back(new Remove(attackingOrganism));
     } else {
-        result.push_back(Action(ActionMapper::A_REMOVE, Position(-1, -1), 0, this));
-        result.push_back(Action(ActionMapper::A_REMOVE, Position(-1, -1), 0, attackingOrganism));
+        result.push_back(new Remove(this));
+        result.push_back(new Remove(attackingOrganism));
     }
     
     return result;

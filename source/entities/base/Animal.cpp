@@ -1,7 +1,9 @@
 #include <cstdlib>
 
 #include "Animal.h"
-#include "../../Environment.h" 
+#include "../../Environment.h"
+#include "../../models/actions/Move.h"
+#include "../../models/actions/Add.h" 
 
 Animal::Animal(Position position, Environment* environment) : Organism(position, environment) {
     this->lastPosition = position;
@@ -10,30 +12,30 @@ Animal::Animal(Position position, Environment* environment) : Organism(position,
 Position Animal::getLastPosition() const { return this->lastPosition; }
 void Animal::setLastPosition(Position value) { this->lastPosition = value; }
 
-std::vector<Action> Animal::move() {
-    std::vector<Action> result;
+std::vector<Action*> Animal::move() {
+    std::vector<Action*> result;
     std::vector<Position> availablePositions = this->getNeighboringPosition();
 
     if (!availablePositions.empty()) {
         int randomIndex = rand() % availablePositions.size();
         Position newPosition = availablePositions[randomIndex];
 
-        result.push_back(Action(ActionMapper::A_MOVE, newPosition, 0, this));
+        result.push_back(new Move(this, newPosition));
 
         this->setLastPosition(this->getPosition());
 
         Organism* metOrganism = this->getEnvironment()->getOrganismFromPosition(newPosition);
         if (metOrganism != nullptr) {
 
-            std::vector<Action> encounterConsequences = metOrganism->consequences(this);
+            std::vector<Action*> encounterConsequences = metOrganism->consequences(this);
             result.insert(result.end(), encounterConsequences.begin(), encounterConsequences.end());
         }
     }
     return result;
 }
 
-std::vector<Action> Animal::action() {
-    std::vector<Action> result;
+std::vector<Action*> Animal::action() {
+    std::vector<Action*> result;
     std::vector<Position> availablePositions = this->getFreeNeighboringPosition();
 
     if (this->ifReproduce() && !availablePositions.empty()) {
@@ -46,7 +48,7 @@ std::vector<Action> Animal::action() {
 
         this->setPower(this->getPower() / 2);
 
-        result.push_back(Action(ActionMapper::A_ADD, newAnimalPosition, 0, newAnimal));
+        result.push_back(new Add(newAnimal));
     }
     return result;
 }

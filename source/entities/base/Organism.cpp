@@ -1,5 +1,6 @@
 #include "Organism.h"
 #include "../../Environment.h"
+#include "../../models/actions/Remove.h"
 
 Organism::Organism(Position position, Environment* environment) {
     this->power = 0;
@@ -65,12 +66,12 @@ std::string Organism::toString() {
         historyString + "}";
 }
 
-std::vector<Action> Organism::consequences(Organism* attackingOrganism) {
-    std::vector<Action> result;
+std::vector<Action*> Organism::consequences(Organism* attackingOrganism) {
+    std::vector<Action*> result;
     if (this->getPower() > attackingOrganism->getPower()) {
-        result.push_back(Action(ActionMapper::A_REMOVE, Position(-1, -1), 0, attackingOrganism));
+        result.push_back(new Remove(attackingOrganism));
     } else {
-        result.push_back(Action(ActionMapper::A_REMOVE, Position(-1, -1), 0, this));
+        result.push_back(new Remove(this));
     }
     return result;
 }
