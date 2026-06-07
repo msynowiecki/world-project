@@ -1,8 +1,9 @@
-#include <cstdlib> // Do obsługi rand()
-#include "Animal.h"
-#include "../../World.h" 
+#include <cstdlib>
 
-Animal::Animal(Position position, World* world) : Organism(position, world) {
+#include "Animal.h"
+#include "../../Environment.h" 
+
+Animal::Animal(Position position, Environment* environment) : Organism(position, environment) {
     this->lastPosition = position;
 }
 
@@ -21,7 +22,7 @@ std::vector<Action> Animal::move() {
 
         this->setLastPosition(this->getPosition());
 
-        Organism* metOrganism = this->getWorld()->getOrganismFromPosition(newPosition);
+        Organism* metOrganism = this->getEnvironment()->getOrganismFromPosition(newPosition);
         if (metOrganism != nullptr) {
 
             std::vector<Action> encounterConsequences = metOrganism->consequences(this);
@@ -51,15 +52,15 @@ std::vector<Action> Animal::action() {
 }
 
 std::vector<Position> Animal::getFreeNeighboringPosition() {
-    if (this->getWorld() == nullptr) {
+    if (this->getEnvironment() == nullptr) {
         return std::vector<Position>();
     }
 
-    return this->getWorld()->filterFreePositions(this->getWorld()->getNeighboringPositions(this->getPosition()));
+    return this->getEnvironment()->filterFreePositions(this->getEnvironment()->getNeighboringPositions(this->getPosition()));
 }
 
 std::vector<Position> Animal::getNeighboringPosition() {
-    return this->getWorld()->getNeighboringPositions(this->getPosition());
+    return this->getEnvironment()->getNeighboringPositions(this->getPosition());
 }
 
 bool Animal::isAnimal() const { return true; }

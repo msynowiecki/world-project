@@ -10,25 +10,24 @@ struct LifeSpan {
     int deathTurn;
 };
 
-class World;
+class Environment; 
 
 class Organism {
-
 private:
-	int power;
-	int initiative;
-	Position position;
-	std::string species;
+    int power;
+    int initiative;
+    Position position;
+    std::string species;
 
-	int liveLength;
-	int reproductionPower;
+    int liveLength;
+    int reproductionPower;
 
-	std::vector<LifeSpan> ancestorHistory;
+    std::vector<LifeSpan> ancestorHistory;
 
-	World* world;
+    Environment* environment; 
 
 public:
-	Organism(Position position, World* world);
+    Organism(Position position, Environment* environment);
     Organism();
 
     virtual ~Organism() = default;
@@ -51,10 +50,9 @@ public:
     int getReproductionPower() const;
     void setReproductionPower(int reproductionPower);
 
-    World* getWorld() const;
+    Environment* getEnvironment() const; 
 
     const std::vector<LifeSpan>& getAncestorHistory() const;
-
     void addAncestorHistory(int birthTurn, int deathTurn);
 
     std::string toString();

@@ -1,9 +1,7 @@
-#include <vector>
-
 #include "Organism.h"
-#include "../../World.h"
+#include "../../Environment.h"
 
-Organism::Organism(Position position, World* world) {
+Organism::Organism(Position position, Environment* environment) {
     this->power = 0;
     this->initiative = 0;
     this->position = position;
@@ -12,10 +10,12 @@ Organism::Organism(Position position, World* world) {
     this->liveLength = 0;
     this->reproductionPower = 0;
     
-    this->world = world;
+    this->environment = environment;
 }
 
-Organism::Organism() : power(0), initiative(0), position(0, 0), species("O"), liveLength(0), reproductionPower(0), world(nullptr) {}
+Organism::Organism() 
+    : power(0), initiative(0), position(0, 0), species("O"), 
+      liveLength(0), reproductionPower(0), environment(nullptr) {}
 
 int Organism::getPower() const { return this->power; }
 void Organism::setPower(int power) { this->power = power; }
@@ -35,7 +35,7 @@ void Organism::setLiveLength(int liveLength) { this->liveLength = liveLength; }
 int Organism::getReproductionPower() const { return this->reproductionPower; }
 void Organism::setReproductionPower(int reproductionPower) { this->reproductionPower = reproductionPower; }
 
-World* Organism::getWorld() const { return this->world; }
+Environment* Organism::getEnvironment() const { return this->environment; } 
 
 const std::vector<LifeSpan>& Organism::getAncestorHistory() const { 
     return this->ancestorHistory; 
@@ -48,10 +48,8 @@ void Organism::addAncestorHistory(int birthTurn, int deathTurn) {
 
 std::string Organism::toString() {
     std::string historyString = ", history: [";
-
     for (size_t iterator = 0; iterator < this->ancestorHistory.size(); iterator++) {
-        historyString += "(" + to_string(this->ancestorHistory[iterator].birthTurn) + "->" + to_string(this->ancestorHistory[iterator].deathTurn) + ")";
-        
+        historyString += "(" + std::to_string(this->ancestorHistory[iterator].birthTurn) + "->" + std::to_string(this->ancestorHistory[iterator].deathTurn) + ")";
         if (iterator < this->ancestorHistory.size() - 1) {
             historyString += ", ";
         }
@@ -59,17 +57,16 @@ std::string Organism::toString() {
     historyString += "]";
 
     return "{ species: " + this->getSpecies() + 
-        ", power: " + to_string(getPower()) + 
-        ", initiative: " + to_string(getInitiative()) + 
+        ", power: " + std::to_string(getPower()) + 
+        ", initiative: " + std::to_string(getInitiative()) + 
         ", position: " + getPosition().toString() + 
-        ", liveLength: " + to_string(getLiveLength()) +
-        ", reproductionPower: " + to_string(getReproductionPower()) +
+        ", liveLength: " + std::to_string(getLiveLength()) +
+        ", reproductionPower: " + std::to_string(getReproductionPower()) +
         historyString + "}";
 }
 
 std::vector<Action> Organism::consequences(Organism* attackingOrganism) {
     std::vector<Action> result;
-
     if (this->getPower() > attackingOrganism->getPower()) {
         result.push_back(Action(ActionMapper::A_REMOVE, Position(-1, -1), 0, attackingOrganism));
     } else {
@@ -79,10 +76,7 @@ std::vector<Action> Organism::consequences(Organism* attackingOrganism) {
 }
 
 bool Organism::ifReproduce() {
-    if (this->getPower() >= this->getReproductionPower()) {
-        return true;
-    }
-    return false;
+    return this->getPower() >= this->getReproductionPower();
 }
 
 bool Organism::isPlant() const { return false; }

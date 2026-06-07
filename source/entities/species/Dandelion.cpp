@@ -1,6 +1,6 @@
 #include "Dandelion.h"
 
-Dandelion::Dandelion(Position position, World* world) : Plant(position, world) {
+Dandelion::Dandelion(Position position, Environment* environment) : Plant(position, environment) {
     this->initialParams();
 }
 

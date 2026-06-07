@@ -5,7 +5,7 @@
 class Toadstool : public Plant {
 
 public:
-    Toadstool(Position position, World* world);
+    Toadstool(Position position, Environment* environment);
 
     void initialParams() override;
     Organism* clone() override;

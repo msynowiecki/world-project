@@ -2,9 +2,9 @@
 
 #include "Wolf.h"
 #include "../base/Plant.h"
-#include "../../World.h"
+#include "../../Environment.h"
 
-Wolf::Wolf(Position position, World* world) : Animal(position, world) {
+Wolf::Wolf(Position position, Environment* environment) : Animal(position, environment) {
     this->initialParams();
 }
 
@@ -31,7 +31,7 @@ std::vector<Action> Wolf::move() {
         result.push_back(Action(ActionMapper::A_MOVE, newPosition, 0, this));
         this->setLastPosition(this->getPosition());
 
-        Organism* metOrganism = this->getWorld()->getOrganismFromPosition(newPosition);
+        Organism* metOrganism = this->getEnvironment()->getOrganismFromPosition(newPosition);
         
         if (metOrganism != nullptr) {
             if (dynamic_cast<Plant*>(metOrganism) == nullptr) {
@@ -48,7 +48,7 @@ std::vector<Action> Wolf::move() {
 }
 
 std::vector<Position> Wolf::getNeighboringPosition() {
-    std::vector<Position> baseNeighbors = this->getWorld()->getNeighboringPositions(this->getPosition());
+    std::vector<Position> baseNeighbors = this->getEnvironment()->getNeighboringPositions(this->getPosition());
     
-    return this->getWorld()->filterPositionsWithOtherSpecies(baseNeighbors, "W");
+    return this->getEnvironment()->filterPositionsWithOtherSpecies(baseNeighbors, "W");
 }

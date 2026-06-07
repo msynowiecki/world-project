@@ -5,7 +5,7 @@
 class Wolf : public Animal {
 
 public:
-    Wolf(Position position, World* world);
+    Wolf(Position position, Environment* environment);
 
     void initialParams() override;
     Organism* clone() override;

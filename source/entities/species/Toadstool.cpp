@@ -1,6 +1,6 @@
 #include "Toadstool.h"
 
-Toadstool::Toadstool(Position position, World* world) : Plant(position, world) {
+Toadstool::Toadstool(Position position, Environment* environment) : Plant(position, environment) {
     this->initialParams();
 }
 

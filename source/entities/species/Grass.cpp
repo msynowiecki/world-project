@@ -1,6 +1,6 @@
 #include "Grass.h"
 
-Grass::Grass(Position position, World* world) : Plant(position, world) {
+Grass::Grass(Position position, Environment* environment) : Plant(position, environment) {
     this->initialParams();
 }
 

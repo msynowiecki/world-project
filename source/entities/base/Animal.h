@@ -4,14 +4,16 @@
 #include "Organism.h"
 #include "../../models/Position.h"
 #include "../../models/Action.h"
-#include "../../World.h"
+
+class Environment;
 
 class Animal : public Organism {
+
 private:
     Position lastPosition;
 
 public:
-    Animal(Position position, World* world);
+    Animal(Position position, Environment* environment);
 
     Position getLastPosition() const;
     void setLastPosition(Position value);

@@ -3,12 +3,13 @@
 
 #include "Organism.h"
 #include "../../models/Action.h"
-#include "../../World.h"
+
+class Environment;
 
 class Plant : public Organism {
 
 public:
-    Plant(Position position, World* world);
+    Plant(Position position, Environment* environment);
 
     virtual ~Plant() = default;
 

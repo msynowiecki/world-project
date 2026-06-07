@@ -1,6 +1,7 @@
 #include "Plant.h"
+#include "../../Environment.h"
 
-Plant::Plant(Position position, World* world) : Organism(position, world) {}
+Plant::Plant(Position position, Environment* environment) : Organism(position, environment) {}
 
 std::vector<Action> Plant::move() {
     std::vector<Action> result;
@@ -30,11 +31,11 @@ std::vector<Action> Plant::action() {
 }
 
 std::vector<Position> Plant::getFreeNeighboringPosition() {
-    if (this->getWorld() == nullptr) {
+    if (this->getEnvironment() == nullptr) {
         return std::vector<Position>();
     }
     
-    return this->getWorld()->filterFreePositions(this->getWorld()->getNeighboringPositions(this->getPosition()));
+    return this->getEnvironment()->filterFreePositions(this->getEnvironment()->getNeighboringPositions(this->getPosition()));
 }
 
 bool Plant::isPlant() const { return true; }

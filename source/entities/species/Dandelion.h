@@ -5,7 +5,7 @@
 class Dandelion : public Plant {
 
 public:
-    Dandelion(Position position, World* world);
+    Dandelion(Position position, Environment* environment);
 
     void initialParams() override;
     Organism* clone() override;

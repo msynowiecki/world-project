@@ -1,7 +1,7 @@
 #include "Sheep.h"
-#include "../../World.h"
+#include "../../Environment.h"
 
-Sheep::Sheep(Position position, World* world) : Animal(position, world) {
+Sheep::Sheep(Position position, Environment* environment) : Animal(position, environment) {
     this->initialParams();
 }
 
@@ -18,7 +18,7 @@ Organism* Sheep::clone() {
 }
 
 std::vector<Position> Sheep::getNeighboringPosition() {
-    std::vector<Position> neighbors = this->getWorld()->getNeighboringPositions(this->getPosition());
+    std::vector<Position> neighbors = this->getEnvironment()->getNeighboringPositions(this->getPosition());
 
-    return this->getWorld()->filterPositionsWithoutAnimals(neighbors);
+    return this->getEnvironment()->filterPositionsWithoutAnimals(neighbors);
 }
