@@ -4,7 +4,9 @@
 
 #include "source/World.h"
 #include "source/models/Position.h"
+#include "source/managers/Turner.h" // Dołączamy nasz nowy manager tury
 
+// Dołączenie poszczególnych gatunków
 #include "source/entities/species/Grass.h"
 #include "source/entities/species/Sheep.h"
 #include "source/entities/species/Dandelion.h"
@@ -12,37 +14,19 @@
 #include "source/entities/species/Toadstool.h"
 
 int main() {
-    srand(time(NULL));
+    srand(static_cast<unsigned int>(time(NULL)));
 
     World livingWorld(8, 8);
+    
+    livingWorld.addOrganism(new Grass(Position(4, 0), &livingWorld));
+    livingWorld.addOrganism(new Sheep(Position(0, 0), &livingWorld));
+    livingWorld.addOrganism(new Dandelion(Position(0, 4), &livingWorld));
+    livingWorld.addOrganism(new Wolf(Position(7, 7), &livingWorld));
+    livingWorld.addOrganism(new Toadstool(Position(4, 4), &livingWorld));
 
-    Organism* grass = new Grass(Position(4, 0), &livingWorld);
-    livingWorld.addOrganism(grass);
+    Turner gameController(livingWorld);
 
-    Organism* sheep = new Sheep(Position(0, 0), &livingWorld);
-    livingWorld.addOrganism(sheep);
-
-    Organism* dandelion = new Dandelion(Position(0, 4), &livingWorld);
-    livingWorld.addOrganism(dandelion);
-
-    Organism* wolf = new Wolf(Position(7, 7), &livingWorld);
-    livingWorld.addOrganism(wolf);
-
-    Organism* toadstool = new Toadstool(Position(4, 4), &livingWorld);
-    livingWorld.addOrganism(toadstool);
-
-    system("clear");
-
-    std::cout << livingWorld.toString() << std::endl;
-
-    for (int iterator = 0; iterator < 100; ++iterator) {
-        std::cin.get();
-
-        system("clear");
-
-        livingWorld.makeTurn();
-        std::cout << livingWorld.toString() << std::endl;
-    }
+    gameController.run(100);
 
     return 0;
 }
