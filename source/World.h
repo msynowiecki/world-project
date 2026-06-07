@@ -1,12 +1,16 @@
 #pragma once
+
 #include <vector>
 #include <string>
+
+#include "Environment.h"
 #include "models/Position.h"
 #include "models/Action.h"
 
 class Organism; 
 
-class World {
+class World : public Environment {
+
 private:
     int worldX;
     int worldY;
@@ -38,8 +42,7 @@ public:
     bool positionOnBoard(const Position& position) const;
     Organism* getOrganismFromPosition(const Position& position) const;
     std::vector<Position> getNeighboringPositions(const Position& position) const;
-
     std::vector<Position> filterFreePositions(const std::vector<Position>& fields) const;
     std::vector<Position> filterPositionsWithoutAnimals(const std::vector<Position>& fields) const;
-    std::vector<Position> filterPositionsWithOtherSpecies(const std::vector<Position>& fields, std::string species) const;
+    std::vector<Position> filterPositionsWithOtherSpecies(const std::vector<Position>& fields, const std::string& species) const;
 };
