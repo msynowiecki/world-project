@@ -66,5 +66,9 @@ public:
     virtual Organism* clone() = 0;
 
     virtual std::vector<Action> consequences(Organism* attackingOrganism);
+
+    virtual bool isPlant() const;
+    virtual bool isAnimal() const;
+
     bool ifReproduce();
 };

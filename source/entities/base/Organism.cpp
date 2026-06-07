@@ -84,3 +84,6 @@ bool Organism::ifReproduce() {
     }
     return false;
 }
+
+bool Organism::isPlant() const { return false; }
+bool Organism::isAnimal() const { return false; }

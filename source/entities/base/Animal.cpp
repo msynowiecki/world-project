@@ -61,3 +61,5 @@ std::vector<Position> Animal::getFreeNeighboringPosition() {
 std::vector<Position> Animal::getNeighboringPosition() {
     return this->getWorld()->getNeighboringPositions(this->getPosition());
 }
+
+bool Animal::isAnimal() const { return true; }

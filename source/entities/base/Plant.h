@@ -17,4 +17,6 @@ public:
 
 protected:
     std::vector<Position> getFreeNeighboringPosition();
+
+    bool isPlant() const override;
 };

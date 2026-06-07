@@ -24,4 +24,6 @@ public:
 
     virtual void initialParams() override = 0;
     virtual Organism* clone() override = 0;
+
+    bool isAnimal() const override;
 };

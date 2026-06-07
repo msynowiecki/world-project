@@ -36,3 +36,5 @@ std::vector<Position> Plant::getFreeNeighboringPosition() {
     
     return this->getWorld()->filterFreePositions(this->getWorld()->getNeighboringPositions(this->getPosition()));
 }
+
+bool Plant::isPlant() const { return true; }
